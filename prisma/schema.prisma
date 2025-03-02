@@ -1,0 +1,105 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url = env("DATABASE_URL")
+}
+
+model User {
+  id String @id @default(cuid())
+  email String @unique
+  name String
+  nbrProjects Int @default(0)
+  isPremium Boolean @default(false)
+  premiumExpiresAt DateTime?
+   subscription Subscription? @relation(fields: [subscriptionId], references: [id])
+  subscriptionId String? @unique  // Unique car one-to-one
+  clients Client[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+ 
+}
+
+model Subscription {
+  id          String   @id @default(cuid())
+  plan        PlanType @default(FREE)
+  startDate   DateTime
+  endDate     DateTime
+  description String
+  user        User?     @relation // Une souscription est liée à un seul utilisateur
+  userId      String?   @unique // La référence de l'utilisateur dans la souscription
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Client {
+  id String @id @default(cuid())
+  name String
+  activity String
+    userId String   // Référence à l'utilisateur (un client appartient à un utilisateur)
+    user User @relation(fields: [userId], references: [id])
+    projects Project[] // Un client peut avoir plusieurs projets
+     createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Project {
+  id String @id @default(cuid())
+  name String
+  date DateTime
+  description String
+  clientId  String   // Référence au client (un projet appartient à un client)
+  client    Client   @relation(fields: [clientId], references: [id])
+  reports Report[]  // Un projet peut avoir plusieurs rapports
+   createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Task {
+  id String @id @default(cuid())
+  title String
+  description String
+  startTime DateTime?
+  endTime DateTime?   // Enregistre l'heure de début du chronomètre
+  duration BigInt @default(0)  // Durée totale de la tâche en secondes
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+
+model Report {
+  id            String   @id @default(cuid())
+  totalTimeSpent Int
+  billingAmount Float
+  generatedAt   DateTime
+  projectId     String
+  project       Project  @relation(fields: [projectId], references: [id])
+  invoice       Invoice? // Une facture est optionnelle (un rapport peut ne pas en avoir)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+model Invoice {
+  id        String   @id @default(cuid())
+  amount    Float
+  status    Status   @default(PENDING)
+  reportId  String   @unique  // Clé étrangère obligatoire (une facture appartient à un seul rapport)
+  report    Report   @relation(fields: [reportId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum PlanType {
+  FREE
+  MONTHLY
+  YEARLY
+}
+
+enum Status {
+  PENDING
+  IN_PROGRESS
+  COMPLETED
+  CANCELLED
+}
