@@ -2,6 +2,101 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type Invoice {
+  id: ID!
+  amount: Float!
+  status: Status!
+  report: Report!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+enum Status {
+  PENDING
+  PAID
+  CANCELLED
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type Report {
+  id: ID!
+  totalSpentTime: Float!
+  billingAmount: Float!
+  generatedAt: DateTime!
+  project: Project!
+  invoice: Invoice!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type Project {
+  id: ID!
+  name: String!
+  date: DateTime!
+  description: String!
+  client: Client!
+  reports: [Report!]!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type Client {
+  id: ID!
+  name: String!
+  activity: String!
+  user: User!
+  projects: [Project!]!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type Subscription {
+  id: ID!
+  planType: PlanType!
+  startDate: DateTime!
+  endDate: DateTime!
+  description: String!
+  user: User
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+enum PlanType {
+  FREE
+  MONTHLY
+  YEARLY
+}
+
+type User {
+  id: ID!
+  email: String!
+  name: String!
+  nbrProjects: Int!
+  isPremium: Boolean!
+  premiumExpiresAt: DateTime
+  subscription: Subscription
+  clients: [Client!]!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type Auth {
+  id: ID!
+  userId: String!
+  password: String!
+  refreshToken: String!
+  accessToken: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  user: User!
+}
+
 type Query {
-  sayHello: String!
+  hello: String!
+  getAuthById(id: String!): Auth
+  helloFromAuthresover: String!
 }
