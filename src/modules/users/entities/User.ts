@@ -26,8 +26,8 @@ export default class User {
   @Field(() => Subscription, { nullable: true })
   subscription?: Subscription;
 
-  @Field(() => [Client])
-  clients: Client[];
+  @Field(() => [Client], { nullable: true })
+  clients?: Client[];
 
   @Field(() => Date)
   createdAt: Date;
