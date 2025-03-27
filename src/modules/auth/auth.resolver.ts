@@ -1,13 +1,30 @@
-import { Resolver, Query, Args } from '@nestjs/graphql';
+import { Args, Mutation, Resolver } from '@nestjs/graphql';
+import { AuthDTO } from './dto/Auth.dto';
 import { AuthRepository } from './auth.repository';
-import { Auth } from './entities/Auth';
-
-@Resolver(() => Auth)
+import { CreateUserUseCase } from './useCase/createUseUseCase';
+import { LoginUserUseCase } from './useCase/loginUserUseCase';
+@Resolver(() => AuthDTO)
 export class AuthResolver {
-  constructor(private readonly authRepository: AuthRepository) {}
+  constructor(
+    private readonly authRepository: AuthRepository,
+    private readonly createUserUseCase: CreateUserUseCase,
+    private readonly loginUserUseCase: LoginUserUseCase,
+  ) {}
 
-  @Query(() => Auth, { nullable: true })
-  async getAuthById(@Args('id') id: string): Promise<Auth | null> {
-    return this.authRepository.findByUserId(id);
+  @Mutation(() => AuthDTO)
+  async register(
+    @Args('email') email: string,
+    @Args('name') name: string,
+    @Args('password') password: string,
+  ) {
+    return await this.createUserUseCase.execute(email, name, password);
+  }
+
+  @Mutation(() => AuthDTO)
+  async login(
+    @Args('email') email: string,
+    @Args('password') password: string,
+  ) {
+    return await this.loginUserUseCase.execute(email, password);
   }
 }
