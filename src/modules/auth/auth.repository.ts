@@ -1,37 +1,35 @@
-import { Injectable } from '@nestjs/common';
-import { PrismaService } from '../../prisma/prisma.service';
-import { Auth } from './entities/Auth';
-// import { PrismaClient } from '@prisma/client';
+import { PrismaClient } from '@prisma/client';
 
-@Injectable()
 export class AuthRepository {
-  constructor(private prisma: PrismaService) {}
+  prisma = new PrismaClient();
 
-  async findByUserId(userId: string): Promise<Auth | null> {
-    const prismaAuth = await this.prisma.auth.findUnique({
-      where: { userId },
+  async createAuth(userId: string, hashedPassword: string) {
+    return await this.prisma.auth.create({
+      data: {
+        userId,
+        password: hashedPassword,
+      },
       include: {
-        user: {
-          include: {
-            clients: true,
-            subscription: true,
-          },
-        },
+        user: true,
       },
     });
+  }
 
-    if (!prismaAuth) {
-      return null;
-    }
-
-    const auth = new Auth();
-    Object.assign(auth, {
-      ...prismaAuth,
-      user: {
-        ...prismaAuth.user,
-        clients: prismaAuth.user.clients || [],
-      },
+  async findUserByEmail(email: string) {
+    return await this.prisma.user.findUnique({
+      where: { email },
+      include: { auth: true },
     });
-    return auth;
+  }
+
+  async updateTokens(
+    userId: string,
+    refreshToken: string,
+    accessToken: string,
+  ) {
+    return await this.prisma.auth.update({
+      where: { userId },
+      data: { refreshToken, accessToken },
+    });
   }
 }
