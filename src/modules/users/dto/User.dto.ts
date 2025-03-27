@@ -29,8 +29,8 @@ export class UserDTO {
   updatedAt: Date;
 
   @Field(() => SubscriptionDTO, { nullable: true })
-  subscription: SubscriptionDTO;
+  subscription?: SubscriptionDTO;
 
   @Field(() => [ClientDTO])
-  clients: ClientDTO[];
+  clients?: ClientDTO[];
 }
