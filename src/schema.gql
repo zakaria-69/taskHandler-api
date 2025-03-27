@@ -2,11 +2,11 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type Invoice {
+type InvoiceDTO {
   id: ID!
   amount: Float!
   status: Status!
-  report: Report!
+  report: ReportDTO!
   createdAt: DateTime!
   updatedAt: DateTime!
 }
@@ -22,45 +22,45 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 """
 scalar DateTime
 
-type Report {
+type ReportDTO {
   id: ID!
   totalSpentTime: Float!
   billingAmount: Float!
   generatedAt: DateTime!
-  project: Project!
-  invoice: Invoice!
+  project: ProjectDTO!
+  invoice: InvoiceDTO
   createdAt: DateTime!
   updatedAt: DateTime!
 }
 
-type Project {
+type ProjectDTO {
   id: ID!
   name: String!
   date: DateTime!
   description: String!
-  client: Client!
-  reports: [Report!]!
+  client: ClientDTO!
+  reports: [ReportDTO!]!
   createdAt: DateTime!
   updatedAt: DateTime!
 }
 
-type Client {
+type ClientDTO {
   id: ID!
   name: String!
   activity: String!
-  user: User!
-  projects: [Project!]!
+  user: UserDTO!
+  projects: [ProjectDTO!]!
   createdAt: DateTime!
   updatedAt: DateTime!
 }
 
-type Subscription {
+type SubscriptionDTO {
   id: ID!
   planType: PlanType!
   startDate: DateTime!
   endDate: DateTime!
   description: String!
-  user: User
+  user: UserDTO
   createdAt: DateTime!
   updatedAt: DateTime!
 }
@@ -71,32 +71,34 @@ enum PlanType {
   YEARLY
 }
 
-type User {
+type UserDTO {
   id: ID!
   email: String!
   name: String!
   nbrProjects: Int!
   isPremium: Boolean!
   premiumExpiresAt: DateTime
-  subscription: Subscription
-  clients: [Client!]!
   createdAt: DateTime!
   updatedAt: DateTime!
+  subscription: SubscriptionDTO
+  clients: [ClientDTO!]!
 }
 
-type Auth {
+type AuthDTO {
   id: ID!
   userId: String!
-  password: String!
-  refreshToken: String!
-  accessToken: String!
+  refreshToken: String
+  accessToken: String
   createdAt: DateTime!
   updatedAt: DateTime!
-  user: User!
+  user: UserDTO!
 }
 
 type Query {
   hello: String!
-  getAuthById(id: String!): Auth
-  helloFromAuthresover: String!
+}
+
+type Mutation {
+  register(email: String!, name: String!, password: String!): AuthDTO!
+  login(email: String!, password: String!): AuthDTO!
 }
