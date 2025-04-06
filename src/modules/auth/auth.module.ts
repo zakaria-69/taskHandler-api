@@ -5,6 +5,7 @@ import { AuthResolver } from './auth.resolver';
 import { CreateUserUseCase } from './useCase/createUseUseCase';
 import { UserRepository } from '../users/users.repository';
 import { LoginUserUseCase } from './useCase/loginUserUseCase';
+import { RefreshTokenUseCase } from './useCase/refreshTokenUseCase';
 @Module({
   imports: [],
 
@@ -15,7 +16,13 @@ import { LoginUserUseCase } from './useCase/loginUserUseCase';
     CreateUserUseCase,
     UserRepository,
     LoginUserUseCase,
+    RefreshTokenUseCase,
   ],
-  exports: [AuthRepository, CreateUserUseCase, LoginUserUseCase],
+  exports: [
+    AuthRepository,
+    CreateUserUseCase,
+    LoginUserUseCase,
+    RefreshTokenUseCase,
+  ],
 })
 export class AuthModule {}
