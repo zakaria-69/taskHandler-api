@@ -1,5 +1,6 @@
+import { Injectable } from '@nestjs/common';
 import { PrismaClient } from '@prisma/client';
-
+@Injectable()
 export class AuthRepository {
   prisma = new PrismaClient();
 
@@ -18,6 +19,13 @@ export class AuthRepository {
   async findUserByEmail(email: string) {
     return await this.prisma.user.findUnique({
       where: { email },
+      include: { auth: true },
+    });
+  }
+
+  async findUserById(id: string) {
+    return await this.prisma.user.findUnique({
+      where: { id: id },
       include: { auth: true },
     });
   }
