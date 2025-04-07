@@ -102,4 +102,5 @@ type Mutation {
   register(email: String!, name: String!, password: String!): AuthDTO!
   login(email: String!, password: String!): AuthDTO!
   refreshToken(refreshToken: String!): AuthDTO!
+  logout: Boolean!
 }
