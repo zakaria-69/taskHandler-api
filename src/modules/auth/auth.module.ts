@@ -6,6 +6,7 @@ import { CreateUserUseCase } from './useCase/createUseUseCase';
 import { UserRepository } from '../users/users.repository';
 import { LoginUserUseCase } from './useCase/loginUserUseCase';
 import { RefreshTokenUseCase } from './useCase/refreshTokenUseCase';
+import { LogoutUserUSeCase } from './useCase/logoutUserUseCase';
 @Module({
   imports: [],
 
@@ -17,12 +18,14 @@ import { RefreshTokenUseCase } from './useCase/refreshTokenUseCase';
     UserRepository,
     LoginUserUseCase,
     RefreshTokenUseCase,
+    LogoutUserUSeCase,
   ],
   exports: [
     AuthRepository,
     CreateUserUseCase,
     LoginUserUseCase,
     RefreshTokenUseCase,
+    LogoutUserUSeCase,
   ],
 })
 export class AuthModule {}
