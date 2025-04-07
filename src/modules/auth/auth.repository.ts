@@ -40,4 +40,14 @@ export class AuthRepository {
       data: { refreshToken, accessToken },
     });
   }
+
+  async deleteTokensByUserId(userId: string): Promise<void> {
+    await this.prisma.auth.updateMany({
+      where: { userId },
+      data: {
+        refreshToken: null,
+        accessToken: null,
+      },
+    });
+  }
 }
