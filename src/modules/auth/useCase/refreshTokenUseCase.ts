@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import * as jwt from 'jsonwebtoken';
 import { AuthRepository } from '../auth.repository';
-import { AuthDTO } from 'src/modules/auth/dto/Auth.dto';
-import { JwtPayload } from 'src/commons/interfaces/jwt-payload.interface';
+import { AuthDTO } from '../../auth/dto/Auth.dto';
+import { JwtPayload } from '../../../commons/interfaces/jwt-payload.interface';
 
 @Injectable()
 export class RefreshTokenUseCase {
