@@ -5,7 +5,7 @@ import { CreateUserUseCase } from './useCase/createUseUseCase';
 import { LoginUserUseCase } from './useCase/loginUserUseCase';
 import { RefreshTokenUseCase } from './useCase/refreshTokenUseCase';
 import { LogoutUserUSeCase } from './useCase/logoutUserUseCase';
-import { CurrentUser } from 'src/commons/decorators/CurrentUser';
+import { CurrentUser } from '../../commons/decorators/CurrentUser';
 import { UseGuards } from '@nestjs/common';
 import { AuthGuard } from './auth.guard';
 @Resolver(() => AuthDTO)

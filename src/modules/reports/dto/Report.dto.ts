@@ -1,6 +1,6 @@
 import { Field, Float, ID, ObjectType } from '@nestjs/graphql';
-import { InvoiceDTO } from 'src/modules/billing/dto/Invoice.dto';
-import { ProjectDTO } from 'src/modules/projects/dto/Project.dto';
+import { InvoiceDTO } from '../../billing/dto/Invoice.dto';
+import { ProjectDTO } from '../../projects/dto/Project.dto';
 
 @ObjectType()
 export class ReportDTO {

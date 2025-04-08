@@ -1,5 +1,5 @@
 import { Field, ID, ObjectType } from '@nestjs/graphql';
-import { UserDTO } from 'src/modules/users/dto/User.dto';
+import { UserDTO } from '../../../modules/users/dto/User.dto';
 
 @ObjectType()
 export class AuthDTO {

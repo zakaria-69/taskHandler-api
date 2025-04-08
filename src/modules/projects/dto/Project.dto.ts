@@ -1,6 +1,6 @@
 import { Field, ID, ObjectType } from '@nestjs/graphql';
-import { ClientDTO } from 'src/modules/clients/dto/Client.dto';
-import { ReportDTO } from 'src/modules/reports/dto/Report.dto';
+import { ClientDTO } from '../../clients/dto/Client.dto';
+import { ReportDTO } from '../../reports/dto/Report.dto';
 
 @ObjectType()
 export class ProjectDTO {

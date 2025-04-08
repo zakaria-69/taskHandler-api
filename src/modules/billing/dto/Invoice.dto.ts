@@ -1,6 +1,6 @@
 import { Field, Float, ID, ObjectType } from '@nestjs/graphql';
-import { Status } from 'src/commons/enums/status.enum';
-import { ReportDTO } from 'src/modules/reports/dto/Report.dto';
+import { Status } from '../../../../src/commons/enums/status.enum';
+import { ReportDTO } from '../../reports/dto/Report.dto';
 
 @ObjectType()
 export class InvoiceDTO {

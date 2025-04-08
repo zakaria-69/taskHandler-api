@@ -1,6 +1,6 @@
 import { Field, ID, ObjectType } from '@nestjs/graphql';
-import { PlanType } from 'src/commons/enums/planType.enum';
-import { UserDTO } from 'src/modules/users/dto/User.dto';
+import { PlanType } from '../../../commons/enums/planType.enum';
+import { UserDTO } from '../../users/dto/User.dto';
 
 @ObjectType()
 export class SubscriptionDTO {
