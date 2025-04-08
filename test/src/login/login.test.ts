@@ -3,7 +3,7 @@ import { INestApplication } from '@nestjs/common';
 import request from 'supertest';
 import { AppModule } from '../../../src/app.module';
 
-describe('Auth Resolver (e2e)', () => {
+describe('Auth Resolver login (e2e)', () => {
   let app: INestApplication;
   let accessToken: string;
 
